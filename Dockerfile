@@ -1,37 +1,23 @@
-# -------- Stage 1: Build the Spring Boot app --------
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+# Use Java 17
+FROM eclipse-temurin:17-jdk-jammy
 
-# Set working directory
+# Set workdir
 WORKDIR /app
 
-# Copy Maven wrapper and pom files
+# Copy Maven wrapper and pom.xml first for caching
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-# Make mvnw executable
+# Give execute permission to mvnw
 RUN chmod +x mvnw
 
-# Download dependencies
-RUN ./mvnw dependency:go-offline
-
-# Copy source code
-COPY src ./src
-
-# Build the app (skip tests for faster build)
+# Build project
+COPY src src
 RUN ./mvnw clean package -DskipTests
 
-# -------- Stage 2: Run the Spring Boot app --------
-FROM eclipse-temurin:17-jre
-
-# Set working directory
-WORKDIR /app
-
-# Copy built jar from previous stage
-COPY --from=build /app/target/*.jar app.jar
-
-# Expose default Spring Boot port
+# Expose port 8080
 EXPOSE 8080
 
-# Run the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run Spring Boot app
+ENTRYPOINT ["java","-jar","target/pastebinlite-0.0.1-SNAPSHOT.jar"]
