@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Pastebin Lite</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+  <h1>📋 Pastebin Lite</h1>
+  <p>Create a paste and share it with anyone.</p>
+
+  <form method="post" action="/create">
+    <textarea name="content" placeholder="Enter your text here..." required></textarea>
+
+    <div class="field-row">
+      TTL (seconds):
+      <input type="number" name="ttl" min="1" placeholder="Optional">
+    </div>
+
+    <div class="field-row">
+      Max views:
+      <input type="number" name="maxViews" min="1" placeholder="Optional">
+    </div>
+
+    <button type="submit">Create Paste</button>
+  </form>
+
+  <!-- Success -->
+  <div th:if="${url}" class="success-box">
+    <strong>✅ Paste created!</strong>
+    <div class="link-box">
+      <input type="text" th:value="${url}" readonly id="pasteUrl">
+      <button type="button" onclick="copy()">Copy</button>
+    </div>
+    <p>
+      <a th:href="${url}">Open paste</a>
+    </p>
+  </div>
+
+  <!-- Error -->
+  <div th:if="${error}" class="error-box" th:text="${error}"></div>
+
+</div>
+
+<script>
+  function copy() {
+    const input = document.getElementById("pasteUrl");
+    input.select();
+    document.execCommand("copy");
+    alert("Link copied!");
+  }
+</script>
+</body>
+</html>

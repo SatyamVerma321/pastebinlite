@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>View Paste</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+  <h1>📄 Paste</h1>
+  <pre th:text="${content}"></pre>
+  <p><a href="/">← Create another paste</a></p>
+</div>
+</body>
+</html>
