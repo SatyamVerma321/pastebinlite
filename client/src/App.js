@@ -29,7 +29,7 @@ export default function App() {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("http://localhost:8080/api/pastes", {
+      const res = await fetch("https://pastebinlite-ey3d.onrender.com/api/pastes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -53,7 +53,7 @@ export default function App() {
     setError("");
     setLoadedPaste(null);
     try {
-      const res = await fetch(`http://localhost:8080/api/pastes/${pasteId}`);
+      const res = await fetch(`https://pastebinlite-ey3d.onrender.com/api/pastes/${pasteId}`);
       if (!res.ok) throw new Error();
       const data = await res.json();
       setLoadedPaste(data);
